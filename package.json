@@ -1,0 +1,17 @@
+{
+  "name": "funlink",
+  "version": "0.0.1",
+  "description": "A multiplayer game room platform designed for fun with friends!",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "plin0009",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.2.0",
+    "socket.io": "^2.2.0"
+  }
+}

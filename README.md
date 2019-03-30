@@ -1,2 +1,3 @@
-# funlink
-A network designed for fun with friends!
+# Funlink
+
+A multiplayer game room platform designed for fun with friends!

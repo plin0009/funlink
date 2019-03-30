@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Funlink</title>
+</head>
+<body>
+    <ul id="messages"></ul>
+    <form id="chooseNickname" action="">
+        <input id="nickname" autocomplete="off" placeholder="Nickname"/><button>Join</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(() => {
+            const socket = io(document.location.pathname);
+            socket.on('connect', () => {
+                console.log('socket connected');
+                $('#chooseNickname').submit(e => {
+                    e.preventDefault();
+                    socket.emit('join', $('#nickname').val());
+                    $('#chooseNickname').remove();
+                    return false;
+                });
+                socket.on('joined', room => {
+                    console.log(`I'm here! ${room.peopleList.length} ${room.peopleList.length == 1 ? 'person' : 'people'} in the room.`);
+                });
+                socket.on('new person', person => {
+                    console.log(`${person.nickname} the ${person.role} with id ${person.id} has joined the game.`);
+                });
+                socket.on('role change', person => {
+                    console.log(`${person.nickname} has been promoted to ${person.role}.`);
+                });
+                socket.on('person left', person => {
+                    console.log(`${person.nickname} (${person.role}) has left the game.`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
