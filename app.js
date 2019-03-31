@@ -3,14 +3,24 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
+const rfid = require('random-friendly-id');
 
 let rooms = {};
-
+app.use('/client', express.static(__dirname + '/client'));
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/');
+});
+app.post('/room/create', (req, res) => {
+    let id = rfid();
+    newRoom(id);
+    res.send({roomId: id});
+});
 app.get('/:ns', (req, res) => {
     if (!rooms[req.params.ns]) {
-        newRoom(req.params.ns);
+        console.log(`no ${req.params.ns} room`);
+        return res.sendFile(__dirname + '/client/404.html');
     }
-    res.sendFile(__dirname + '/client/index.html');
+    res.sendFile(__dirname + '/client/room.html');
 });
 const newRoom = ns => {
     console.log(`new namespace ${ns}`);

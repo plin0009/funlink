@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/client/styles.css">
+    <title>Funlink</title>
+</head>
+<body>
+    <div id="container">
+        <div id="link">
+            <h2>Share this Funlink!</h2>
+            <p>Click the link below to copy it.</p>
+            <input id="url" class="small readonly url" onclick="copyUrl()" readonly/>
+        </div>
+        <form id="chooseNickname" action="">
+            <input id="nickname" class="big input" autocomplete="off" placeholder="Nickname"/><button class="big">Join</button>
+        </form>
+        <ul id="messages"></ul>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/client/room.js"></script>
+</body>
+</html>
