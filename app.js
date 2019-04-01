@@ -26,12 +26,22 @@ const newRoom = ns => {
     console.log(`new namespace ${ns}`);
     rooms[ns] = {
         peopleList: [],
-        people: {}
+        people: {},
+        inactivity: setTimeout(() => {
+            console.log(`deleting namespace ${ns} due to inactivity`);
+            namespace.removeAllListeners();
+            delete rooms[ns];
+            delete io.nsps[`/${ns}`];
+        }, 30000)
     };
     let namespace = io.of('/' + ns);
     namespace.on('connect', socket => {
         console.log(`${socket.id} connected`);
-        console.log(Object.keys(namespace.connected));
+        if (rooms[ns].inactivity) {
+            console.log(`${ns} is active`);
+            clearTimeout(rooms[ns].inactivity);
+            delete rooms[ns].inactivity;
+        }
         socket.on('join', nickname => {
             console.log(`${nickname} connected to namespace ${ns}`);
             let role = 'spectator';
@@ -50,8 +60,8 @@ const newRoom = ns => {
         socket.on('disconnect', () => {
             console.log(`${socket.id} disconnected`);
             if (rooms[ns].people[socket.id]) {
-                console.log(`${socket.id} is no longer a person`);
                 let person = rooms[ns].people[socket.id];
+                console.log(`${person.nickname} (${socket.id}) left`);
                 socket.broadcast.emit('person left', person);
                 delete rooms[ns].people[socket.id];
                 rooms[ns].peopleList.splice(rooms[ns].peopleList.indexOf(socket.id), 1);
@@ -73,10 +83,13 @@ const newRoom = ns => {
                 }
             }
             if (!Object.keys(namespace.connected).length) {
-                console.log(`deleting namespace ${ns}`);
-                namespace.removeAllListeners();
-                delete rooms[ns];
-                delete io.nsps[`/${ns}`];
+                console.log(`no one is in namespace ${ns}`);
+                rooms[ns].inactivity = setTimeout(() => {
+                    console.log(`deleting namespace ${ns} due to inactivity`);
+                    namespace.removeAllListeners();
+                    delete rooms[ns];
+                    delete io.nsps[`/${ns}`];
+                }, 30000);
             }
         });
     });
