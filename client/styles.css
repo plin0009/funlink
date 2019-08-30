@@ -1,66 +1,110 @@
 html, body {
     margin: 0;
+    height: 100%;
     font-family: sans-serif;
-    background-color: #dcf;
+    background-color: #cdf;
 }
-input {
+input[type="text"] {
     text-align: center;
-    width: 50%;
+    width: 80%;
     margin: 0 5%;
     padding: .5em 0;
     background-color: #ffffff22;
     border: 0;
 }
-
 button {
     padding: .5em;
 }
-
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-li {
-    padding: 1em;
+.big {
+    font-size: 150%;
 }
-li:nth-child(odd) {
-    background: #edf;
+.small {
+    font-size: 60%;
+}
+.left {
+    text-align: left;
+}
+input.input {
+    background: transparent;
+    border-bottom: 2px solid #69f;
 }
 
-.input {
-    background: transparent;
-    border-bottom: 2px solid #96f;
+[v-cloak] {
+    display: none;
 }
+
+#app {
+    margin: auto;
+    width: 90%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+#interface {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+}
+#interact {
+    display: flex;
+    width: 50%;
+    height: 30%;
+    background-color: #fffc;
+}
+#chat {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+}
+#users {
+    padding: 1% 5%;
+    background-color: #fffc;
+}
+#messages {
+    overflow-y: auto;
+    flex-grow: 1;
+}
+#messages li {
+    padding: .5em;
+}
+#messages li:nth-child(odd) {
+    background: #def;
+}
+
 #url {
     text-overflow: ellipsis;
     direction: rtl;
-}
-#container {
-    margin: auto;
-    width: 90%;
-    text-align: center;
 }
 
 #link {
     margin: auto;
     text-align: center;
-    width: 50%;
+    max-width: 400px;
+    padding: 2%;
 }
 
 #chooseNickname {
     position: absolute;
-    top: 50%;
-    width: 100%;
-    left: 0%;
+    top: 45%;
+    width: 60%;
+    left: 20%;
     text-align: center;
 }
 
-.big {
-    font-size: 150%;
+#sendMessage {
+    width: 100%;
+    padding: 2%;
 }
 
-.small {
-    font-size: 60%;
+.nickname {
+    font-weight: bold;
+    padding: 0 1em;
 }

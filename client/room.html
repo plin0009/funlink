@@ -8,19 +8,49 @@
     <title>Funlink</title>
 </head>
 <body>
-    <div id="container">
+    <div id="app" v-cloak>
         <div id="link">
             <h2>Share this Funlink!</h2>
             <p>Click the link below to copy it.</p>
-            <input id="url" class="small readonly url" onclick="copyUrl()" readonly/>
+            <input type="text" id="url" class="small readonly url" onclick="copyUrl()" readonly/>
         </div>
         <form id="chooseNickname" action="">
-            <input id="nickname" class="big input" autocomplete="off" placeholder="Nickname"/><button class="big">Join</button>
+            <input type="text" id="nickname" class="big input" autocomplete="off" placeholder="Nickname"/><button class="big">Join</button>
         </form>
-        <ul id="messages"></ul>
+        <div id="interface">
+            <form id="chooseGame" action="">
+                <fieldset id="gameChoices" disabled>
+                    <input type="radio" id="ticTacToe" name="gameChoice" value="ticTacToe" checked>
+                    <label for="ticTacToe">Tic Tac Toe</label>
+                    <input type="radio" id="rockPaperScissors" name="gameChoice" value="rockPaperScissors">
+                    <label for="rockPaperScissors">Rock Paper Scissors</label>
+                    <input type="radio" id="chess" name="gameChoice" value="chess">
+                    <label for="chess">Chess</label>
+                    <button class="big">Start Game</button>
+                </fieldset>
+            </form>
+            <div id="interact" style="display:none">
+                <div id="chat">
+                    <ul id="messages"></ul>
+                    <form id="sendMessage" action="">
+                        <input type="text" id="message" class="input" autocomplete="off" placeholder="Say something!"/>
+                    </form>
+                </div>
+                <div id="users">
+                    <ul>
+                        {{ room.peopleList && `${room.peopleList.length} people` }}
+                        <li v-for="person in room.people">
+                            {{ person.nickname }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="/client/room.js"></script>
 </body>
 </html>
